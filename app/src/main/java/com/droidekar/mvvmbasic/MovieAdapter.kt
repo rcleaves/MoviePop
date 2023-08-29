@@ -9,9 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.droidekar.mvvmbasic.databinding.MoviesLayoutBinding
 import com.droidekar.mvvmbasic.model.Result
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     private var movieList = ArrayList<Result>()
@@ -39,6 +44,11 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
             .load(url)
             .into(holder.binding.movieImage)
         holder.binding.movieName.text = movieList[position].title
+
+        // get year of release
+        val date = LocalDate.parse(movieList[position].release_date, DateTimeFormatter.ISO_DATE)
+        //holder.binding.releaseDate.text = "(" + date.year + ")"
+        holder.binding.releaseDate.text = "(" + movieList[position].vote_average.toString() + ")"
 
         GlobalScope.launch(Dispatchers.Main) {
             holder.binding.movieImage.setOnClickListener {

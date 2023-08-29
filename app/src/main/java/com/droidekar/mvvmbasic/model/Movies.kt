@@ -1,7 +1,5 @@
 package com.droidekar.mvvmbasic.model
 
-import javax.xml.transform.Result
-
 data class Movies(
     val page: Int,
     val results: List<Result>,
